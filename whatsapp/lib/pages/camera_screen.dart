@@ -1,0 +1,49 @@
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+
+class CameraScreen extends StatefulWidget {
+  final List<CameraDescription>? cameras;
+  const CameraScreen(this.cameras, {super.key});
+
+  @override
+  State<CameraScreen> createState() {
+    return _CameraScreen();
+  }
+}
+
+class _CameraScreen extends State<CameraScreen> {
+  CameraController? controller;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.cameras != null) {
+      if (widget.cameras!.isNotEmpty) {
+        controller =
+            CameraController(widget.cameras![0], ResolutionPreset.medium);
+        controller?.initialize().then((_) {
+          if (!mounted) {
+            return;
+          }
+          setState(() {});
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (controller == null || controller!.value.isInitialized) {
+      return const Text('Camera');
+    }
+    return AspectRatio(
+        aspectRatio: controller!.value.aspectRatio,
+        child: CameraPreview(controller!));
+  }
+}
