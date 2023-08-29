@@ -8,3 +8,5 @@
 > /whatsapp
 ### Netflix Clone
 > /netflix
+### Banking App
+> /banking_app
