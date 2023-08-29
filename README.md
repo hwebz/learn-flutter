@@ -19,15 +19,19 @@
 > /netflix
 
 #### Screenshots
-<img src="./screenshots/netflix.png" width="200" />
-<img src="./screenshots/netflix4.png" width="200" />
-<img src="./screenshots/netflix3.png" width="200" />
-<img src="./screenshots/netflix2.png" width="200" />
-<img src="./screenshots/netflix1.png" width="200" />
+<div style="display: flex;flex-wrap: wrap;">
+    <img src="./screenshots/netflix.png" width="200" />
+    <img src="./screenshots/netflix4.png" width="200" />
+    <img src="./screenshots/netflix3.png" width="200" />
+    <img src="./screenshots/netflix2.png" width="200" />
+    <img src="./screenshots/netflix1.png" width="200" />
+</div>
 
 ### Banking App
 > /banking_app
 
 #### Screenshots
-<img src="./screenshots/banking_app.png" width="200" />
-<img src="./screenshots/banking_app1.png" width="200" />
+<div style="display: flex;flex-wrap: wrap;">
+    <img src="./screenshots/banking_app.png" width="200" />
+    <img src="./screenshots/banking_app1.png" width="200" />
+</div>
