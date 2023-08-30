@@ -35,3 +35,12 @@
     <img src="./screenshots/banking_app.png" width="200" />
     <img src="./screenshots/banking_app1.png" width="200" />
 </div>
+
+### Pet Adoption
+> /pet_adoption
+
+#### Screenshots
+<div style="display: flex;flex-wrap: wrap;">
+    <img src="./screenshots/pet_adoption1.png" width="200" />
+    <img src="./screenshots/pet_adoption.png" width="200" />
+</div>
