@@ -44,3 +44,9 @@
     <img src="./screenshots/pet_adoption1.png" width="200" />
     <img src="./screenshots/pet_adoption.png" width="200" />
 </div>
+
+### Parallax Effect
+> /parallax_effect
+
+#### Screenshots
+<img src="./screenshots/parallax_effect.png" width="200" />
