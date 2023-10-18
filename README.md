@@ -50,3 +50,9 @@
 
 #### Screenshots
 <img src="./screenshots/parallax_effect.png" width="200" />
+
+### Settings Screen
+> /settings_screen
+
+#### Screenshots
+<img src="./screenshots/settings_screen.png" width="200" />
