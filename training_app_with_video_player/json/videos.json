@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Test 1",
+        "time": "45 seconds",
+        "thumbnail": "assets/runner.png",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    },
+    {
+        "title": "Test 2",
+        "time": "45 seconds",
+        "thumbnail": "assets/runner.png",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+    },
+    {
+        "title": "Test 3",
+        "time": "45 seconds",
+        "thumbnail": "assets/runner.png",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    },
+    {
+        "title": "Test 4",
+        "time": "45 seconds",
+        "thumbnail": "assets/runner.png",
+        "videoUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+    }
+]
