@@ -56,3 +56,13 @@
 
 #### Screenshots
 <img src="./screenshots/settings_screen.png" width="200" />
+
+### Training App with Video Player
+> /training_app_with_video_player
+
+#### Screenshots
+<img src="./screenshots/training_app_with_video_player.png" width="200" />
+<img src="./screenshots/training_app_with_video_player-1.png" width="200" />
+<img src="./screenshots/training_app_with_video_player-2.png" width="200" />
+<img src="./screenshots/training_app_with_video_player-3.png" width="200" />
+<img src="./screenshots/training_app_with_video_player-4.png" width="200" />
