@@ -7,7 +7,7 @@
 > /login_form
 
 #### Screenshots
-<img src="./screenshots/login_form.png" width="200" />
+<img src="/screenshots/login_form.png" width="200" />
 
 ### Simple WhatsApp Clone
 > /whatsapp
