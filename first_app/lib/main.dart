@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
       title: 'My App',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         // body: GradientContainer(colors: [Colors.red, Colors.blue])
         body: Quiz(),
