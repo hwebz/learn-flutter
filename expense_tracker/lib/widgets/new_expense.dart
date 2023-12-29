@@ -41,7 +41,11 @@ class _NewExpenseState extends State<NewExpense> {
                     InputDecoration(prefixText: '\$ ', label: Text('Amount'))),
             Row(
               children: [
-                TextButton(onPressed: () {}, child: Text('Cancel')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Cancel')),
                 ElevatedButton(
                     onPressed: () {
                       // print(_enteredTitle);
