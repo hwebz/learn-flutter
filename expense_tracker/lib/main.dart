@@ -36,7 +36,7 @@ void main() {
                 fontWeight: FontWeight.normal,
                 color: kColorScheme.onSecondaryContainer,
                 fontSize: 14))),
-    themeMode: ThemeMode.dark,
+    themeMode: ThemeMode.system,
     home: const Expenses(),
   ));
 }
