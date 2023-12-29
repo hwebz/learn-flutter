@@ -30,10 +30,19 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses.add(expense);
     });
+    Navigator.pop(context);
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
   }
 
   _openAddExpenseOverlay() {
     showModalBottomSheet(
+        // Make sure keyboard doesn't cover the modal
+        isScrollControlled: true,
         context: context,
         builder: (ctx) {
           return NewExpense(
@@ -55,7 +64,10 @@ class _ExpensesState extends State<Expenses> {
         body: Column(
           children: [
             Text('The Chart'),
-            Expanded(child: ExpensesList(expenses: _registeredExpenses))
+            Expanded(
+                child: ExpensesList(
+                    expenses: _registeredExpenses,
+                    onRemoveExpense: _removeExpense))
           ],
         ));
   }
