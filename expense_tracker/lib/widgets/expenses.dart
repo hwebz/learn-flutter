@@ -62,7 +62,8 @@ class _ExpensesState extends State<Expenses> {
           return NewExpense(
             onAddExpense: _addExpense,
           );
-        });
+        },
+        useSafeArea: true);
   }
 
   @override
@@ -86,9 +87,7 @@ class _ExpensesState extends State<Expenses> {
         body: width < 600
             ? Column(
                 children: [
-                  Container(
-                      margin: const EdgeInsets.symmetric(vertical: 15),
-                      child: Chart(expenses: _registeredExpenses)),
+                  Chart(expenses: _registeredExpenses),
                   Expanded(child: mainContent)
                 ],
               )
