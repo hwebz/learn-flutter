@@ -7,10 +7,22 @@ import 'package:intl/intl.dart';
 
 final formatter = DateFormat.yMd();
 
+/* 3 Trees:
+* 1. Widget Tree: Widget that used to build UI
+* 2. Element Tree: Elements are instances of Widgets that being rendered in memory
+* 3. Render Tree: Elements are being rendered on the screen
+*/
+
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key, required this.onAddExpense});
 
   final void Function(Expense expense) onAddExpense;
+
+  @override
+  StatefulElement createElement() {
+    print("This method gonna be called before build()");
+    return super.createElement();
+  }
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -103,6 +115,8 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    print("This method gonna be called after createElement()");
+    print("build() method is being called to re-render if any state updated");
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(builder: (ctx, constraints) {
       final width = constraints.maxWidth;
