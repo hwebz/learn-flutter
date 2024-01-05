@@ -75,3 +75,11 @@
 <img src="./screenshots/quiz-1.png" width="200" />
 <img src="./screenshots/quiz-2.png" width="200" />
 <img src="./screenshots/quiz-3.png" width="200" />
+
+### Expense Tracker
+[Learn Flutter and Dart to Build iOS and Android Apps - Second Edition](https://learning.oreilly.com/course/learn-flutter-and/9781805122029/)
+> /expense-tracker
+
+#### Screenshots
+<img src="./screenshots/expense-tracker.png" width="200" />
+<img src="./screenshots/expense-tracker-1.png" width="200" />

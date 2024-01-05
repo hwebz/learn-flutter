@@ -113,6 +113,9 @@ class _NewExpenseState extends State<NewExpense> {
     Navigator.pop(context);
   }
 
+  /// To prevent re-render the whole parent widget tree
+  /// we should separate the part that includes
+  /// state changes to a new smaller widget
   @override
   Widget build(BuildContext context) {
     print("This method gonna be called after createElement()");
