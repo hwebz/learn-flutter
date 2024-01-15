@@ -2,31 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/providers/filters_provider.dart';
 
-class FiltersScreen extends ConsumerStatefulWidget {
+class FiltersScreen extends ConsumerWidget {
   const FiltersScreen({super.key});
 
   @override
-  ConsumerState<FiltersScreen> createState() => _FiltersScreenState();
-}
-
-class _FiltersScreenState extends ConsumerState<FiltersScreen> {
-  var _glutenFreeFilterSet = false;
-  var _lactoseFreeFilterSet = false;
-  var _vegetarianFilterSet = false;
-  var _veganFilterSet = false;
-
-  @override
-  void initState() {
-    super.initState();
-    final activeFilters = ref.read(filtersProvider);
-    _glutenFreeFilterSet = activeFilters[Filter.glutenFree]!;
-    _lactoseFreeFilterSet = activeFilters[Filter.lactoseFree]!;
-    _vegetarianFilterSet = activeFilters[Filter.vegetarian]!;
-    _veganFilterSet = activeFilters[Filter.vegan]!;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilters = ref.watch(filtersProvider);
     return Scaffold(
       appBar: AppBar(title: const Text("Your Filters")),
       // drawer: MainDrawer(onSelectScreen: (identifier) {
@@ -36,51 +17,42 @@ class _FiltersScreenState extends ConsumerState<FiltersScreen> {
       //         MaterialPageRoute(builder: (ctx) => const TabsScreen()));
       //   }
       // }),
-      body: WillPopScope(
-        onWillPop: () async {
-          ref.read(filtersProvider.notifier).setFilters({
-            Filter.glutenFree: _glutenFreeFilterSet,
-            Filter.lactoseFree: _lactoseFreeFilterSet,
-            Filter.vegetarian: _vegetarianFilterSet,
-            Filter.vegan: _veganFilterSet,
-          });
-
-          return true;
-        },
-        child: Column(
-          children: [
-            switchOption("Gluten Free", "Only include gluten free meals",
-                _glutenFreeFilterSet, (isChecked) {
-              setState(() {
-                _glutenFreeFilterSet = isChecked;
-              });
-            }),
-            switchOption("Lactose Free", "Only include lactose free meals",
-                _lactoseFreeFilterSet, (isChecked) {
-              setState(() {
-                _lactoseFreeFilterSet = isChecked;
-              });
-            }),
-            switchOption("Vegetarian", "Only include vegetarian meals",
-                _vegetarianFilterSet, (isChecked) {
-              setState(() {
-                _vegetarianFilterSet = isChecked;
-              });
-            }),
-            switchOption("Vegan", "Only include vegan meals", _veganFilterSet,
-                (isChecked) {
-              setState(() {
-                _veganFilterSet = isChecked;
-              });
-            }),
-          ],
-        ),
+      body: Column(
+        children: [
+          switchOption(context, "Gluten Free", "Only include gluten free meals",
+              activeFilters[Filter.glutenFree]!, (isChecked) {
+            ref
+                .read(filtersProvider.notifier)
+                .setFilter(Filter.glutenFree, isChecked);
+          }),
+          switchOption(
+              context,
+              "Lactose Free",
+              "Only include lactose free meals",
+              activeFilters[Filter.lactoseFree]!, (isChecked) {
+            ref
+                .read(filtersProvider.notifier)
+                .setFilter(Filter.lactoseFree, isChecked);
+          }),
+          switchOption(context, "Vegetarian", "Only include vegetarian meals",
+              activeFilters[Filter.vegetarian]!, (isChecked) {
+            ref
+                .read(filtersProvider.notifier)
+                .setFilter(Filter.vegetarian, isChecked);
+          }),
+          switchOption(context, "Vegan", "Only include vegan meals",
+              activeFilters[Filter.vegan]!, (isChecked) {
+            ref
+                .read(filtersProvider.notifier)
+                .setFilter(Filter.glutenFree, isChecked);
+          }),
+        ],
       ),
     );
   }
 
-  Widget switchOption(String title, String subtitle, bool value,
-      void Function(bool isChecked) onChange) {
+  Widget switchOption(BuildContext context, String title, String subtitle,
+      bool value, void Function(bool isChecked) onChange) {
     return SwitchListTile(
       value: value,
       onChanged: onChange,
