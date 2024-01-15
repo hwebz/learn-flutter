@@ -83,3 +83,15 @@
 #### Screenshots
 <img src="./screenshots/expense-tracker.png" width="200" />
 <img src="./screenshots/expense-tracker-1.png" width="200" />
+
+### Meals App
+[Learn Flutter and Dart to Build iOS and Android Apps - Second Edition](https://learning.oreilly.com/course/learn-flutter-and/9781805122029/)
+> /meals_app
+
+#### Screenshots
+<img src="./screenshots/meals-app.png" width="200" />
+<img src="./screenshots/meals-app-1.png" width="200" />
+<img src="./screenshots/meals-app-2.png" width="200" />
+<img src="./screenshots/meals-app-3.png" width="200" />
+<img src="./screenshots/meals-app-4.png" width="200" />
+<img src="./screenshots/meals-app-5.png" width="200" />
