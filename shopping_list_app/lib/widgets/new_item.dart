@@ -18,9 +18,13 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables];
+  var _isSending = false;
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSending = true;
+      });
       _formKey.currentState!.save();
 
       print(_enteredName);
@@ -41,6 +45,8 @@ class _NewItemState extends State<NewItem> {
           }));
 
       print(response);
+      // Simulate loading state
+      await Future.delayed(const Duration(seconds: 5));
 
       final Map<String, dynamic> resData = json.decode(response.body);
 
@@ -143,12 +149,20 @@ class _NewItemState extends State<NewItem> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                          onPressed: () {
-                            _formKey.currentState!.reset();
-                          },
+                          onPressed: _isSending
+                              ? null
+                              : () {
+                                  _formKey.currentState!.reset();
+                                },
                           child: const Text("Reset")),
                       ElevatedButton(
-                          onPressed: _saveItem, child: const Text("Add Item"))
+                          onPressed: _isSending ? null : _saveItem,
+                          child: _isSending
+                              ? const SizedBox(
+                                  height: 16,
+                                  width: 16,
+                                  child: CircularProgressIndicator())
+                              : const Text("Add Item"))
                     ],
                   )
                 ],
