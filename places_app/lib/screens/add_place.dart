@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:places_app/providers/user_places.dart';
+import 'package:places_app/widgets/image_input.dart';
 
 class AddPlaceScreen extends ConsumerStatefulWidget {
   const AddPlaceScreen({super.key});
@@ -48,6 +49,9 @@ class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.onBackground),
               ),
+              const SizedBox(height: 16),
+              // Image Input
+              const ImageInput(),
               const SizedBox(height: 16),
               ElevatedButton.icon(
                   onPressed: _savePlace,
