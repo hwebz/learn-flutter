@@ -176,7 +176,10 @@ class _GroceryListState extends State<GroceryList> {
               }
 
               if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
+                return const Center(
+                    child:
+                        Text('Failed to fetch data. Please try again later.'));
+                // You can use snapshot.error.toString() to get more details
               }
 
               if (snapshot.data!.isEmpty) {
