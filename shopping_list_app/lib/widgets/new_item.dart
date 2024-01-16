@@ -46,7 +46,7 @@ class _NewItemState extends State<NewItem> {
 
       print(response);
       // Simulate loading state
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 3));
 
       final Map<String, dynamic> resData = json.decode(response.body);
 

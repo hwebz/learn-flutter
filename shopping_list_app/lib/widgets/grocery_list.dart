@@ -29,9 +29,10 @@ class _GroceryListState extends State<GroceryList> {
   void _loadItems() async {
     try {
       final url = Uri.https(
-          'test.shoppinglistflutter-70bb4-default-rtdb.asia-southeast1.firebasedatabase.app',
+          'shoppinglistflutter-70bb4-default-rtdb.asia-southeast1.firebasedatabase.app',
           'shopping_list.json');
       final response = await http.get(url);
+      await Future.delayed(const Duration(seconds: 3));
 
       final Map<String, dynamic> listData = json.decode(response.body);
       final List<GroceryItem> _loadedItems = [];
@@ -93,10 +94,28 @@ class _GroceryListState extends State<GroceryList> {
     });
   }
 
-  void _removeItem(GroceryItem item) {
-    setState(() {
-      _groceryItems.remove(item);
-    });
+  void _removeItem(GroceryItem item) async {
+    try {
+      final url = Uri.https(
+          'test.shoppinglistflutter-70bb4-default-rtdb.asia-southeast1.firebasedatabase.app',
+          'shopping_list/${item.id}.json');
+      await http.delete(url);
+
+      setState(() {
+        _groceryItems.remove(item);
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Failed to delete item. Please try again later.'),
+            duration: Duration(seconds: 3)));
+      }
+    }
   }
 
   @override
@@ -115,7 +134,7 @@ class _GroceryListState extends State<GroceryList> {
       content = ListView.builder(
           itemCount: _groceryItems.length,
           itemBuilder: (ctx, index) => Dismissible(
-                key: ValueKey(_groceryItems[index].id),
+                key: UniqueKey(),
                 onDismissed: (direction) {
                   _removeItem(_groceryItems[index]);
                 },
