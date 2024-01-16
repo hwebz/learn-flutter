@@ -8,7 +8,7 @@ class PlacesDetailScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Your Places"),
-          actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+          centerTitle: false,
         ),
         body: const Text("Place Details"));
   }
