@@ -104,7 +104,7 @@ class _GroceryListState extends State<GroceryList> {
   void _removeItem(GroceryItem item) async {
     try {
       final url = Uri.https(
-          'test.shoppinglistflutter-70bb4-default-rtdb.asia-southeast1.firebasedatabase.app',
+          'shoppinglistflutter-70bb4-default-rtdb.asia-southeast1.firebasedatabase.app',
           'shopping_list/${item.id}.json');
       await http.delete(url);
 
