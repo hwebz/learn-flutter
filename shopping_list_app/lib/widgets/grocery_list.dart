@@ -34,6 +34,13 @@ class _GroceryListState extends State<GroceryList> {
       final response = await http.get(url);
       await Future.delayed(const Duration(seconds: 3));
 
+      if (json.decode(response.body) == null) {
+        setState(() {
+          _isLoading = false;
+        });
+        return;
+      }
+
       final Map<String, dynamic> listData = json.decode(response.body);
       final List<GroceryItem> _loadedItems = [];
       for (final item in listData.entries) {
