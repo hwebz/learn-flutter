@@ -5,7 +5,7 @@ import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:places_app/models/places.dart';
 
-const API_KEY = 'AIzaSyAMej_i3sTWxMABHzEtZ_4cjqSKFmrVAbU';
+const API_KEY = 'test';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key, required this.onSelectLocation});
