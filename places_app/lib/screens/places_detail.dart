@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places_app/models/places.dart';
 
-const API_KEY = 'test';
+const API_KEY = 'GOOGLE_MAP_API_KEY';
 
 class PlacesDetailScreen extends StatelessWidget {
   const PlacesDetailScreen({super.key, required this.place});
