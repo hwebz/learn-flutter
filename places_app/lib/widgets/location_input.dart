@@ -7,7 +7,11 @@ import 'package:places_app/models/places.dart';
 
 // Replace GOOGLE_MAP_API_KEY with your own API key
 // for entire projects (there are multiple places define API_KEY)
-// And make sure to enable 3 APIS: Geocoding, Map Static, Places API
+// And make sure to enable 4 APIS:
+// 1. Geocoding API
+// 2. Places API
+// 3. Maps Static API
+// 4. Maps SDK for Android
 const API_KEY = 'GOOGLE_MAP_API_KEY';
 
 class LocationInput extends StatefulWidget {
