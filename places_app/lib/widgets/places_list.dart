@@ -30,6 +30,7 @@ class PlacesList extends StatelessWidget {
                   .textTheme
                   .titleMedium!
                   .copyWith(color: Theme.of(context).colorScheme.onBackground)),
+          subtitle: Text(place.location.address),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) => PlacesDetailScreen(place: place)));
