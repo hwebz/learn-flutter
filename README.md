@@ -106,3 +106,14 @@
 <img src="./screenshots/grocery-app-2.png" width="200" />
 <img src="./screenshots/grocery-app-3.png" width="200" />
 <img src="./screenshots/grocery-app-4.png" width="200" />
+
+### Places App
+[Learn Flutter and Dart to Build iOS and Android Apps - Second Edition](https://learning.oreilly.com/course/learn-flutter-and/9781805122029/)
+> /places_app
+
+#### Screenshots
+<img src="./screenshots/places-app.png" width="200" />
+<img src="./screenshots/places-app-1.png" width="200" />
+<img src="./screenshots/places-app-2.png" width="200" />
+<img src="./screenshots/places-app-3.png" width="200" />
+<img src="./screenshots/places-app-4.png" width="200" />
