@@ -18,6 +18,10 @@ A new Flutter project.
 
 > flutter pub add firebase_auth
 
+> flutter pub add firebase_storage
+
+> flutter pub add image_picker
+
 > flutterfire configure
 
 ## Re-run pod for ios
