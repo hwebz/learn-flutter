@@ -37,3 +37,9 @@ https://firebase.google.com/docs/flutter/setup
 ## Set up a Firebase Cloud Messaging client app on Flutter
 
 https://firebase.google.com/docs/cloud-messaging/flutter/client
+
+## Enable Functions and deploy trigger
+
+> firebase init
+
+> firebase deploy
