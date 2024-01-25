@@ -19,3 +19,8 @@ A new Flutter project.
 > flutter pub add firebase_auth
 
 > flutterfire configure
+
+## Re-run pod for ios
+> cd ios
+
+> pod install

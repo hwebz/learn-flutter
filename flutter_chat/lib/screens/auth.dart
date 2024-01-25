@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -13,7 +16,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
 
-  void _submit() {
+  void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
     if (isValid) {
@@ -30,6 +33,17 @@ class _AuthScreenState extends State<AuthScreen> {
         // log users in
       } else {
         // sign users up
+        try {
+          final userCredentials =
+              await _firebase.createUserWithEmailAndPassword(
+                  email: _enteredEmail, password: _enteredPassword);
+        } on FirebaseAuthException catch (error) {
+          if (error.code == 'email-already-in-use') {}
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(error.message ?? 'Authentication failed.'),
+          ));
+        }
       }
     }
   }
@@ -103,7 +117,11 @@ class _AuthScreenState extends State<AuthScreen> {
                                       .primaryContainer),
                               child: Text(_isLogin ? 'Login' : 'Signup')),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  _isLogin = !_isLogin;
+                                });
+                              },
                               child: Text(_isLogin
                                   ? 'Create an account'
                                   : 'I already have an account. Login instead.'))
