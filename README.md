@@ -117,3 +117,13 @@
 <img src="./screenshots/places-app-2.png" width="200" />
 <img src="./screenshots/places-app-3.png" width="200" />
 <img src="./screenshots/places-app-4.png" width="200" />
+
+
+### Chat App (Firebase Auth, FireStore, Firebase Storage, (Firebase Messaging, Firebase Cloud Function for Push Notification))
+[Learn Flutter and Dart to Build iOS and Android Apps - Second Edition](https://learning.oreilly.com/course/learn-flutter-and/9781805122029/)
+> /flutter_chat
+
+#### Screenshots
+<img src="./screenshots/chat_app.png" width="200" />
+<img src="./screenshots/chat_app-1.png" width="200" />
+<img src="./screenshots/chat_app-2.png" width="200" />
