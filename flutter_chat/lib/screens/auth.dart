@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/widgets/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -15,39 +18,40 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  File? _selectedImage;
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (isValid) {
-      // Close the keyboard
-      FocusScope.of(context).unfocus();
+    if (!isValid || _isLogin && _selectedImage == null) return;
 
-      // Trigger onSaved
-      _formKey.currentState!.save();
+    // Close the keyboard
+    FocusScope.of(context).unfocus();
 
-      print(_enteredEmail);
-      print(_enteredPassword);
+    // Trigger onSaved
+    _formKey.currentState!.save();
 
-      try {
-        UserCredential userCredentials;
-        if (_isLogin) {
-          // log users in
-          userCredentials = await _firebase.signInWithEmailAndPassword(
-              email: _enteredEmail, password: _enteredPassword);
-        } else {
-          // sign users up
-          userCredentials = await _firebase.createUserWithEmailAndPassword(
-              email: _enteredEmail, password: _enteredPassword);
-        }
-        print(userCredentials);
-      } on FirebaseAuthException catch (error) {
-        if (error.code == 'email-already-in-use') {}
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(error.message ?? 'Authentication failed.'),
-        ));
+    print(_enteredEmail);
+    print(_enteredPassword);
+
+    try {
+      UserCredential userCredentials;
+      if (_isLogin) {
+        // log users in
+        userCredentials = await _firebase.signInWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
+      } else {
+        // sign users up
+        userCredentials = await _firebase.createUserWithEmailAndPassword(
+            email: _enteredEmail, password: _enteredPassword);
       }
+      print(userCredentials);
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {}
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(error.message ?? 'Authentication failed.'),
+      ));
     }
   }
 
@@ -75,6 +79,12 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (_isLogin)
+                            UserImagePicker(onPickImage: (File image) {
+                              setState(() {
+                                _selectedImage = image;
+                              });
+                            }),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Email address',
