@@ -25,6 +25,12 @@ class _AuthScreenState extends State<AuthScreen> {
 
       print(_enteredEmail);
       print(_enteredPassword);
+
+      if (_isLogin) {
+        // log users in
+      } else {
+        // sign users up
+      }
     }
   }
 

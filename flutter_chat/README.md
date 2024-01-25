@@ -3,14 +3,19 @@
 A new Flutter project.
 
 ## Getting Started
+> npm i -g firebase-tools
 
-This project is a starting point for a Flutter application.
+[Add Firebase to your Flutter project](https://firebase.google.com/docs/flutter/setup)
 
-A few resources to get you started if this is your first Flutter project:
+## Add Firebase to your Flutter project
+> firebase login
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+> dart pub global activate flutterfire_cli
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> flutterfire configure
+
+> flutter pub add firebase_core
+
+> flutter pub add firebase_auth
+
+> flutterfire configure
