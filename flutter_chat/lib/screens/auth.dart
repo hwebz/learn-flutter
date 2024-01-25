@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/widgets/user_image_picker.dart';
 
@@ -18,6 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
   var _enteredEmail = '';
   var _enteredPassword = '';
+  var _enteredUser = '';
   File? _selectedImage;
 
   void _submit() async {
@@ -33,6 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
     print(_enteredEmail);
     print(_enteredPassword);
+    print(_enteredUser);
 
     try {
       UserCredential userCredentials;
@@ -44,6 +48,24 @@ class _AuthScreenState extends State<AuthScreen> {
         // sign users up
         userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
+
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child('${userCredentials.user?.uid}.jpg');
+
+        await storageRef.putFile(_selectedImage!);
+        final imageUrl = await storageRef.getDownloadURL();
+        print(imageUrl);
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredentials.user!.uid)
+            .set({
+          'username': _enteredUser,
+          'email': _enteredEmail,
+          'image_url': imageUrl,
+        });
       }
       print(userCredentials);
     } on FirebaseAuthException catch (error) {
@@ -79,7 +101,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (_isLogin)
+                          if (!_isLogin)
                             UserImagePicker(onPickImage: (File image) {
                               setState(() {
                                 _selectedImage = image;
@@ -105,6 +127,25 @@ class _AuthScreenState extends State<AuthScreen> {
                               _enteredEmail = value!;
                             },
                           ),
+                          if (!_isLogin)
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'Username',
+                              ),
+                              enableSuggestions: false,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.trim().length < 4) {
+                                  return 'Please enter at least 4 characters.';
+                                }
+
+                                return null;
+                              },
+                              onSaved: (value) {
+                                _enteredUser = value!;
+                              },
+                            ),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Password',
