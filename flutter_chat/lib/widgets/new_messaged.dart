@@ -19,8 +19,7 @@ class _NewChatMessageState extends State<NewChatMessage> {
   }
 
   void _submitMessage() async {
-    // clear input hide keyboard
-    _messageController.clear();
+    // hide keyboard
     FocusScope.of(context).unfocus();
 
     final enteredMessage = _messageController.text;
@@ -28,7 +27,8 @@ class _NewChatMessageState extends State<NewChatMessage> {
     if (enteredMessage.trim().isEmpty) {
       return;
     }
-
+    // clear input
+    _messageController.clear();
     // Send message to firestore
     final user = FirebaseAuth.instance.currentUser!;
     final userData = await FirebaseFirestore.instance
