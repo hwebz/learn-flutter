@@ -26,7 +26,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (!isValid || _isLogin && _selectedImage == null) return;
+    if (!isValid || (!_isLogin && _selectedImage == null)) return;
 
     // Close the keyboard
     FocusScope.of(context).unfocus();

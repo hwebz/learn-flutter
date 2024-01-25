@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/widgets/message_bubble.dart';
 
 class ChatMessages extends StatelessWidget {
   const ChatMessages({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authenticatedUser = FirebaseAuth.instance.currentUser!;
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('chat')
-            .orderBy('createdAt', descending: false)
+            .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (ctx, chatSnapshots) {
           if (chatSnapshots.connectionState == ConnectionState.waiting) {
@@ -28,10 +31,32 @@ class ChatMessages extends StatelessWidget {
           final loadedMessages = chatSnapshots.data!.docs;
 
           return ListView.builder(
+              padding: const EdgeInsets.only(bottom: 40, left: 13, right: 13),
+              reverse: true,
               itemCount: loadedMessages.length,
               itemBuilder: (ctx, index) {
-                final message = loadedMessages[index];
-                return Text(message['text']);
+                final message = loadedMessages[index].data();
+                final nextChatMessage = index + 1 < loadedMessages.length
+                    ? loadedMessages[index + 1].data()
+                    : null;
+
+                final currentMessageUserId = message['userId'];
+                final nextMessageUserId =
+                    nextChatMessage != null ? nextChatMessage['userId'] : null;
+                final nextUserIsSame =
+                    nextMessageUserId == currentMessageUserId;
+
+                if (nextUserIsSame) {
+                  return MessageBubble.next(
+                      message: message['text'],
+                      isMe: authenticatedUser.uid == currentMessageUserId);
+                }
+
+                return MessageBubble.first(
+                    userImage: message['userImage'],
+                    username: message['username'],
+                    message: message['text'],
+                    isMe: authenticatedUser.uid == currentMessageUserId);
               });
         });
   }
