@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:meta/meta.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:blog_app/features/auth/domain/entities/user.dart'
+    as user_entity;
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -19,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       ));
 
       res.fold((l) => emit(AuthFailure(message: l.message)),
-          (uid) => emit(AuthSuccess(uid: uid)));
+          (user) => emit(AuthSuccess(user: user)));
     });
   }
 }
