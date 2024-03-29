@@ -1,3 +1,4 @@
+import 'package:blog_app/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:blog_app/core/secrets/app_secrets.dart';
 import 'package:blog_app/core/theme/theme.dart';
 import 'package:blog_app/features/auth/data/datasources/auth_remote_data_source.dart';
@@ -26,6 +27,9 @@ void main() async {
         //                 supabaseClient: supabase.client)))))
         create: (_) => serviceLocator<AuthBloc>(),
       ),
+      BlocProvider(
+        create: (_) => serviceLocator<AppUserCubit>(),
+      ),
     ],
     child: const MyApp(),
   ));
@@ -51,7 +55,21 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.darkThemeMode,
-      home: const LogInPage(),
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(
+        selector: (state) {
+          return state is AppUserLoggedIn;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Logged In'),
+              ),
+            );
+          }
+          return const LogInPage();
+        },
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
