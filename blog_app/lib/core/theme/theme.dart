@@ -14,5 +14,9 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
           enabledBorder: _border(),
           contentPadding: const EdgeInsets.all(27),
-          focusedBorder: _border(AppPallete.gradient2)));
+          focusedBorder: _border(AppPallete.gradient2)),
+      chipTheme: const ChipThemeData(
+        backgroundColor: AppPallete.backgroundColor,
+        side: BorderSide.none,
+      ));
 }
