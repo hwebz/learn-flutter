@@ -12,4 +12,6 @@ abstract interface class BlogRepository {
     required List<String> topics,
     required String userId,
   });
+
+  Future<Either<Failure, List<Blog>>> getAllBlogs();
 }

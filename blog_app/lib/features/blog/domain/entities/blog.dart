@@ -6,6 +6,7 @@ class Blog {
   final String? imageUrl;
   final DateTime updatedAt;
   final String userId;
+  final String? userName;
 
   Blog({
     required this.id,
@@ -15,5 +16,6 @@ class Blog {
     required this.imageUrl,
     required this.updatedAt,
     required this.userId,
+    this.userName,
   });
 }
