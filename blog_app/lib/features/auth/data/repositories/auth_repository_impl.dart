@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> getCurrentUser() async {
+  Future<Either<Failure, User?>> getCurrentUser() async {
     try {
       if (!(await connectionChecker.isConnected)) {
         final session = remoteDataSource.currentUserSession;
@@ -72,8 +72,21 @@ class AuthRepositoryImpl implements AuthRepository {
       if (user == null) {
         left(Failure('User not logged in!'));
       }
-      print(user!.email);
-      return right(user!);
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    try {
+      if (!(await connectionChecker.isConnected)) {
+        return left(Failure('No internet connection!'));
+      }
+      await remoteDataSource.logout();
+
+      return right(null);
     } on ServerException catch (e) {
       return left(Failure(e.message));
     }

@@ -6,6 +6,7 @@ import 'package:blog_app/features/auth/data/repositories/auth_repository_impl.da
 import 'package:blog_app/features/auth/domain/repository/auth_repository.dart';
 import 'package:blog_app/features/auth/domain/usecases/current_user.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_log_in.dart';
+import 'package:blog_app/features/auth/domain/usecases/user_log_out.dart';
 import 'package:blog_app/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:blog_app/features/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:blog_app/features/blog/data/datasources/blog_local_data_source.dart';
@@ -79,6 +80,11 @@ void _initAuth() {
         authRepository: serviceLocator(),
       ),
     )
+    ..registerFactory(
+      () => UserLogOut(
+        authRepository: serviceLocator(),
+      ),
+    )
     // Bloc
     ..registerLazySingleton(
       () => AuthBloc(
@@ -86,6 +92,7 @@ void _initAuth() {
         userLogin: serviceLocator(),
         currentUser: serviceLocator(),
         appUserCubit: serviceLocator(),
+        userLogout: serviceLocator(),
       ),
     );
 }

@@ -63,7 +63,6 @@ class BlogModel extends Blog {
     String? userId,
     String? userName,
   }) {
-    print('TEST - ${userName ?? this.userName}');
     return BlogModel(
       id: id ?? this.id,
       title: title ?? this.title,
