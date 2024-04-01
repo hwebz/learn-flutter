@@ -27,7 +27,13 @@ class BlogCard extends StatelessWidget {
                         blog.imageUrl!,
                         fit: BoxFit.cover,
                       )
-                    : null,
+                    : Container(
+                        height: double.infinity,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: AppPallete.gradient1,
+                          borderRadius: BorderRadius.circular(10),
+                        )),
               )),
           Container(
             height: 200,

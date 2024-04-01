@@ -21,7 +21,20 @@ class BlogModel extends Blog {
       'topics': topics,
       'image_url': imageUrl,
       'updated_at': updatedAt.toIso8601String(),
+      'user_id': userId
+    };
+  }
+
+  Map<String, dynamic> toLocalJson() {
+    return <String, dynamic>{
+      'id': id,
+      'title': title,
+      'content': content,
+      'topics': topics,
+      'image_url': imageUrl,
+      'updated_at': updatedAt.toIso8601String(),
       'user_id': userId,
+      'user_name': userName
     };
   }
 
@@ -31,11 +44,12 @@ class BlogModel extends Blog {
       title: map['title'] as String,
       content: map['content'] as String,
       topics: List<String>.from(map['topics'] ?? []),
-      imageUrl: map['image_url'] as String,
+      imageUrl: map['image_url'] as String?,
       updatedAt: map['updated_at'] == null
           ? DateTime.now()
           : DateTime.parse(map['updated_at']),
       userId: map['user_id'] as String,
+      userName: map['user_name'] as String?,
     );
   }
 
@@ -49,6 +63,7 @@ class BlogModel extends Blog {
     String? userId,
     String? userName,
   }) {
+    print('TEST - ${userName ?? this.userName}');
     return BlogModel(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -58,6 +73,19 @@ class BlogModel extends Blog {
       updatedAt: updatedAt ?? this.updatedAt,
       userId: userId ?? this.userId,
       userName: userName ?? this.userName,
+    );
+  }
+
+  BlogModel copyForLocal() {
+    return BlogModel(
+      id: id,
+      title: title,
+      content: content,
+      topics: topics,
+      imageUrl: null,
+      updatedAt: updatedAt,
+      userId: userId,
+      userName: userName,
     );
   }
 }
