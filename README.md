@@ -127,3 +127,15 @@
 <img src="./screenshots/chat_app.png" width="200" />
 <img src="./screenshots/chat_app-1.png" width="200" />
 <img src="./screenshots/chat_app-2.png" width="200" />
+
+### Blogs App (Authentication/Authorization, BLoC/Cubit, Hive, GetIt)
+[Flutter Clean Architecture Full Course For Beginners - Bloc, Supabase, Hive, GetIt](https://www.youtube.com/watch?v=ELFORM9fmss)
+> /blog_app
+
+#### Screenshots
+<img src="./screenshots/blog_app.png" width="200" />
+<img src="./screenshots/blog_app-1.png" width="200" />
+<img src="./screenshots/blog_app-2.png" width="200" />
+<img src="./screenshots/blog_app-3.png" width="200" />
+<img src="./screenshots/blog_app-4.png" width="200" />
+<img src="./screenshots/blog_app-5.png" width="200" />
