@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blog_app/core/constants/constants.dart';
 import 'package:blog_app/core/error/exception.dart';
 import 'package:blog_app/features/blog/data/models/blog_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,13 +22,16 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   Future<BlogModel> uploadBlog(BlogModel blog) async {
     try {
       final blogData = await supabaseClient
-          .from('blogs')
+          .from(DatabaseTables.blogs)
           .insert(
             blog.toJson(),
           )
           .select();
 
       return BlogModel.fromJson(blogData.first);
+    } on PostgrestException catch (e) {
+      print(e);
+      throw ServerException(message: e.message);
     } catch (e) {
       print(e);
       throw ServerException(message: e.toString());
@@ -38,7 +42,7 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   Future<String> uploadBlogImage(
       {required File image, required BlogModel blog}) async {
     try {
-      const storageBucket = 'blog_images';
+      const storageBucket = StorageBuckets.blogImages;
       final imagePath = blog.id;
       await supabaseClient.storage.from(storageBucket).upload(imagePath, image);
       // .upload(
@@ -47,6 +51,9 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
       // );
 
       return supabaseClient.storage.from(storageBucket).getPublicUrl(imagePath);
+    } on StorageException catch (e) {
+      print(e);
+      throw ServerException(message: e.message);
     } catch (e) {
       print(e);
       throw ServerException(message: e.toString());
@@ -56,15 +63,19 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   @override
   Future<List<BlogModel>> getAllBlogs() async {
     try {
-      final blogs =
-          await supabaseClient.from('blogs').select('*, profiles (name)');
+      final blogs = await supabaseClient
+          .from('blogs')
+          .select('*, ${DatabaseTables.profiles} (name)');
       return blogs
           .map(
             (blog) => BlogModel.fromJson(blog).copyWith(
-              userName: blog['profiles']['name'],
+              userName: blog[DatabaseTables.profiles]['name'],
             ),
           )
           .toList();
+    } on PostgrestException catch (e) {
+      print(e);
+      throw ServerException(message: e.message);
     } catch (e) {
       print(e);
       throw ServerException(message: e.toString());
