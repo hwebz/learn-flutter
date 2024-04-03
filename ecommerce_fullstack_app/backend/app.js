@@ -2,19 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
 const env = process.env;
 
 // body-parser
-app.use(borderParser.json());
+app.use(bodyParser.json());
 // morgan
 app.use(morgan('tiny'));
 // cors
 app.use(cors());
 app.options('*', cors());
 
+/*
+ * Sample middlewares
 app.use((_, __, next) => {
   console.log('A request has been made to your server');
   next();
@@ -42,10 +45,17 @@ app.get('/', (request, response) => {
 app.get('/watch/videos/:id', authorization, (request, response) => {
   return response.json({ videoId: request.params.id});
 })
+*/
 
 // Start the server
 const hostname = env.HOSTNAME
 const port = env.PORT
+
+mongoose.connect(env.MONGODB_CONNECTION_STRING).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(error => {
+  console.error('Error connecting to MongoDB:', error.message);
+});
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}`);
