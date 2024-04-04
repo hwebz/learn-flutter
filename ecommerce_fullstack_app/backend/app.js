@@ -47,6 +47,12 @@ app.get('/watch/videos/:id', authorization, (request, response) => {
 })
 */
 
+const authRouter = require('./routes/auth');
+app.use(env.API_URL, authRouter);
+
+// const productsRouter = require('./routes/products');
+// app.use('/products', productsRouter);
+
 // Start the server
 const hostname = env.HOSTNAME
 const port = env.PORT
