@@ -1,8 +1,9 @@
 const { User } = require('../models/user');
 const { Token } = require('../models/token');
 const bcrypt = require('bcryptjs');
-const validateRequest = require('../utils/validateRequest')
+const validateRequest = require('../utils/validate_request')
 const jwt = require('jsonwebtoken');
+const sendMail = require('../helpers/email_sender');
 
 exports.register = async (req, res) => {
   const errors = validateRequest(req);
@@ -121,6 +122,39 @@ exports.verifyToken = async (req, res) => {
   }
 };
 
-exports.forgotPassword = async (req, res) => {};
+exports.forgotPassword = async (req, res) => {
+  const errors = validateRequest(req);
+  if (errors) {
+    return res.status(400).json({ errors });
+  }
+
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ type: 'AuthError', message: 'User not found. Check your email and try again.' });
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    user.resetPasswordOtp = otp;
+    user.resetPasswordOtpExpires = Date.now() + 600000; // 10 minutes
+
+    await user.save();
+
+    const response = await sendMail(
+      email,
+      'Password Reset OTP',
+      `Your OTP for password reset is: ${otp}`,
+      `Password Reset OTP sent successfully for ${email}`,
+      `Error sending password reset OTP for ${email}`
+    );
+
+    return res.status(200).json({ message: response.message });
+  } catch (error) {
+    return res.status(500).json({ type: error.name, message: error.message });
+  }
+};
 exports.verifyPasswordResetOTP = async (req, res) => {};
 exports.resetPassword = async (req, res) => {};

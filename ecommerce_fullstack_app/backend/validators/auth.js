@@ -1,7 +1,9 @@
 const { body } = require('express-validator');
 
+const emailValidator = body('email').isEmail().withMessage('Please enter a valid email address');
+
 const common = [
-  body('email').isEmail().withMessage('Please enter a valid email address'),
+  emailValidator,
   body('password')
   .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
   .isStrongPassword().withMessage('Password must contain at least one uppercase, one lowercase, one symbol.'),
@@ -15,4 +17,8 @@ exports.register = [
 
 exports.login = [
   ...common
+]
+
+exports.forgotPassword = [
+  emailValidator
 ]
