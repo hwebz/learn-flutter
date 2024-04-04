@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const authJwt = require('./middlewares/jwt');
+const errorHandler = require('./middlewares/error_handler');
 
 const app = express();
 const env = process.env;
@@ -15,6 +17,9 @@ app.use(morgan('tiny'));
 // cors
 app.use(cors());
 app.options('*', cors());
+// Custom middlewares
+app.use(authJwt())
+app.use(errorHandler);
 
 /*
  * Sample middlewares
@@ -46,6 +51,10 @@ app.get('/watch/videos/:id', authorization, (request, response) => {
   return response.json({ videoId: request.params.id});
 })
 */
+
+app.get(`${env.API_URL}/users`, (req, res) => {
+  return res.status(200).json({ test: 'suceess' });
+})
 
 const authRouter = require('./routes/auth');
 app.use(env.API_URL, authRouter);
