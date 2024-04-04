@@ -156,5 +156,32 @@ exports.forgotPassword = async (req, res) => {
     return res.status(500).json({ type: error.name, message: error.message });
   }
 };
-exports.verifyPasswordResetOTP = async (req, res) => {};
+exports.verifyPasswordResetOTP = async (req, res) => {
+  const errors = validateRequest(req);
+  if (errors) {
+    return res.status(400).json({ errors });
+  }
+
+  try {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ type: 'AuthError', message: 'User not found. Check your email and try again.' });
+    }
+
+    if (user.resetPasswordOtp !== +otp || user.resetPasswordOtpExpires < Date.now()) {
+      return res.status(400).json({ type: 'AuthError', message: 'Invalid OTP. Please try again.' });
+    }
+
+    user.resetPasswordOtp = undefined;
+    user.resetPasswordOtpExpires = undefined;
+
+    await user.save();
+
+    return res.status(200).json({ message: 'OTP verified successfully' });
+  } catch (error) {
+    return res.status(500).json({ type: error.name, message: error.message }); 
+  }
+};
 exports.resetPassword = async (req, res) => {};

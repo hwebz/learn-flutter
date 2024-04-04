@@ -22,3 +22,15 @@ exports.login = [
 exports.forgotPassword = [
   emailValidator
 ]
+
+exports.verifyPasswordResetOTP = [
+  emailValidator,
+  body('otp')
+    .custom(value => {
+      console.log(value);
+      if (!/^[0-9]{6}$/.test(value)) {
+        throw new Error('OTP must be a 6-digit number');
+      }
+      return true;
+    })
+]
