@@ -37,6 +37,10 @@ const userSchema = Schema({
   },
   resetPasswordOtp: Number,
   resetPasswordOtpExpires: Date,
+  resetPasswordOtpVerified: {
+    type: Boolean,
+    default: false,
+  },
   wishlist: [
     {
       productId: {

@@ -1,12 +1,13 @@
 const { body } = require('express-validator');
 
 const emailValidator = body('email').isEmail().withMessage('Please enter a valid email address');
+const passwordValidator = body('password')
+  .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
+  .isStrongPassword().withMessage('Password must contain at least one uppercase, one lowercase, one symbol.');
 
 const common = [
   emailValidator,
-  body('password')
-  .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-  .isStrongPassword().withMessage('Password must contain at least one uppercase, one lowercase, one symbol.'),
+  passwordValidator,
 ]
 
 exports.register = [
@@ -33,4 +34,8 @@ exports.verifyPasswordResetOTP = [
       }
       return true;
     })
+]
+
+exports.resetPassword = [
+  ...common
 ]

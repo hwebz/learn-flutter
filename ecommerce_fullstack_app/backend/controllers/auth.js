@@ -176,6 +176,7 @@ exports.verifyPasswordResetOTP = async (req, res) => {
 
     user.resetPasswordOtp = undefined;
     user.resetPasswordOtpExpires = undefined;
+    user.resetPasswordOtpVerified = true;
 
     await user.save();
 
@@ -184,4 +185,31 @@ exports.verifyPasswordResetOTP = async (req, res) => {
     return res.status(500).json({ type: error.name, message: error.message }); 
   }
 };
-exports.resetPassword = async (req, res) => {};
+exports.resetPassword = async (req, res) => {
+  const errors = validateRequest(req);
+  if (errors) {
+    return res.status(400).json({ errors });
+  }
+  
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).json({ type: 'AuthError', message: 'User not found. Check your email and try again.' });
+    }
+
+    if (!user.resetPasswordOtpVerified) {
+      return res.status(400).json({ type: 'AuthError', message: 'Please verify OTP first.' });
+    }
+
+    user.passwordHash = bcrypt.hashSync(password, 8);
+    user.resetPasswordOtpVerified = false;
+
+    await user.save();
+
+    return res.status(200).json({ message: 'Password reset successfully' });
+  } catch (error) {
+    return res.status(500).json({ type: error.name, message: error.message });
+  }
+};
