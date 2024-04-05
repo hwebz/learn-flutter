@@ -59,6 +59,8 @@ app.use(`${env.API_URL}/users`, usersRouter);
 const adminRouter = require('./routes/admin');
 app.use(`${env.API_URL}/admin`, adminRouter);
 
+app.use('/public', express.static(__dirname + '/public'));
+
 // Start the server
 const hostname = env.HOSTNAME
 const port = env.PORT

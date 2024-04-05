@@ -2,15 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const adminController = require('../controllers/admin');
+const usersController = require('../controllers/admin/users');
+const categoriesController = require('../controllers/admin/categories');
 
 // USERS
-router.get('/users/count', adminController.getUsersCount);
-router.delete('/users/:id', adminController.deleteUser);
+router.get('/users/count', usersController.getUsersCount);
+router.delete('/users/:id', usersController.deleteUser);
 
 // CATEGORIES
-router.post('/categories', adminController.addCategory);
-router.put('/categories/:id', adminController.updateCategory);
-router.delete('/categories/:id', adminController.deleteCategory);
+router.post('/categories', categoriesController.addCategory);
+router.put('/categories/:id', categoriesController.updateCategory);
+router.delete('/categories/:id', categoriesController.deleteCategory);
 
 // PRODUCTS
 router.get('/products/count', adminController.getProductsCount);

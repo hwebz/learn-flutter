@@ -41,6 +41,10 @@ const userSchema = Schema({
     type: Boolean,
     default: false,
   },
+  cart: [{
+    type: Schema.Types.ObjectId,
+    ref: 'CardProduct'
+  }],
   wishlist: [
     {
       productId: {
