@@ -56,9 +56,8 @@ const authRouter = require('./routes/auth');
 app.use(env.API_URL, authRouter);
 const usersRouter = require('./routes/users');
 app.use(`${env.API_URL}/users`, usersRouter);
-
-// const productsRouter = require('./routes/products');
-// app.use('/products', productsRouter);
+const adminRouter = require('./routes/admin');
+app.use(`${env.API_URL}/admin`, adminRouter);
 
 // Start the server
 const hostname = env.HOSTNAME
