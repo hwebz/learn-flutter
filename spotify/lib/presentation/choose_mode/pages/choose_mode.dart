@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/button/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
+import 'package:spotify/presentation/authentication/pages/signup_or_signin.dart';
 import 'package:spotify/presentation/choose_mode/bloc/theme_cubit.dart';
 
 class ChooseModePage extends StatelessWidget {
@@ -51,7 +53,7 @@ class ChooseModePage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        context.read<ThemeCubit>().updateTheme(ThemeMode.light);
+                        context.read<ThemeCubit>().updateTheme(ThemeMode.dark);
                       },
                       child: Column(
                         children: [
@@ -62,7 +64,9 @@ class ChooseModePage extends StatelessWidget {
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
-                                    color: const Color(0xff30393c)
+                                    color: Color(context.isDarkMode
+                                            ? 0xFFFFFFFF
+                                            : 0xff30393c)
                                         .withOpacity(0.5),
                                     shape: BoxShape.circle),
                                 child: SvgPicture.asset(
@@ -81,7 +85,7 @@ class ChooseModePage extends StatelessWidget {
                     const SizedBox(width: 40),
                     GestureDetector(
                       onTap: () {
-                        context.read<ThemeCubit>().updateTheme(ThemeMode.dark);
+                        context.read<ThemeCubit>().updateTheme(ThemeMode.light);
                       },
                       child: Column(
                         children: [
@@ -92,7 +96,9 @@ class ChooseModePage extends StatelessWidget {
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
-                                    color: const Color(0xff30393c)
+                                    color: Color(context.isDarkMode
+                                            ? 0xff30393c
+                                            : 0xFFFFFFFF)
                                         .withOpacity(0.5),
                                     shape: BoxShape.circle),
                                 child: SvgPicture.asset(
@@ -113,11 +119,11 @@ class ChooseModePage extends StatelessWidget {
                 const SizedBox(height: 50),
                 BasicAppButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (BuildContext context) =>
-                      //             const ChooseModePage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SignUpOrSignInPage()));
                     },
                     title: 'Continue'),
               ],
