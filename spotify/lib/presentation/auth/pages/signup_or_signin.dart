@@ -61,7 +61,7 @@ class SignUpOrSignInPage extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const SignupPage()));
+                                        SignupPage()));
                           },
                           title: 'Sign Up'),
                     ),
@@ -74,7 +74,7 @@ class SignUpOrSignInPage extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const SigninPage()));
+                                        SigninPage()));
                           },
                           style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(80)),

@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,9 +41,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBTNuS2a2cmQiQEthS4AU17JID2U_wiMTA',
-    appId: '1:628206724834:web:710ddff1845bb9838420bb',
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['WEB_API_KEY'] ?? '',
+    appId: dotenv.env['WEB_APP_ID'] ?? '',
     messagingSenderId: '628206724834',
     projectId: 'spotify-flutter-app-70cb7',
     authDomain: 'spotify-flutter-app-70cb7.firebaseapp.com',
@@ -50,35 +51,35 @@ class DefaultFirebaseOptions {
     measurementId: 'G-DLMCSZKCM6',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCjrAvsggUu4saboKfnfoHrMJTCLem5v4g',
-    appId: '1:628206724834:android:9119155beedeed338420bb',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['ANDROID_API_KEY'] ?? '',
+    appId: dotenv.env['ANDROID_APP_ID'] ?? '',
     messagingSenderId: '628206724834',
     projectId: 'spotify-flutter-app-70cb7',
     storageBucket: 'spotify-flutter-app-70cb7.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBGNXFdeVUw64sehy_Lkte176LXnq2_9BE',
-    appId: '1:628206724834:ios:0d37650173b10fd88420bb',
-    messagingSenderId: '628206724834',
-    projectId: 'spotify-flutter-app-70cb7',
-    storageBucket: 'spotify-flutter-app-70cb7.appspot.com',
-    iosBundleId: 'com.example.spotify',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBGNXFdeVUw64sehy_Lkte176LXnq2_9BE',
-    appId: '1:628206724834:ios:0d37650173b10fd88420bb',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['IOS_API_KEY'] ?? '',
+    appId: dotenv.env['IOS_APP_ID'] ?? '',
     messagingSenderId: '628206724834',
     projectId: 'spotify-flutter-app-70cb7',
     storageBucket: 'spotify-flutter-app-70cb7.appspot.com',
     iosBundleId: 'com.example.spotify',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBTNuS2a2cmQiQEthS4AU17JID2U_wiMTA',
-    appId: '1:628206724834:web:7521777cdf2728538420bb',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['MACOS_API_KEY'] ?? '',
+    appId: dotenv.env['MACOS_APP_ID'] ?? '',
+    messagingSenderId: '628206724834',
+    projectId: 'spotify-flutter-app-70cb7',
+    storageBucket: 'spotify-flutter-app-70cb7.appspot.com',
+    iosBundleId: 'com.example.spotify',
+  );
+
+  static FirebaseOptions windows = FirebaseOptions(
+    apiKey: dotenv.env['WINDOWS_API_KEY'] ?? '',
+    appId: dotenv.env['WINDOWS_APP_ID'] ?? '',
     messagingSenderId: '628206724834',
     projectId: 'spotify-flutter-app-70cb7',
     authDomain: 'spotify-flutter-app-70cb7.firebaseapp.com',
