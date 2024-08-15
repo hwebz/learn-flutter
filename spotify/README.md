@@ -2,6 +2,13 @@
 
 A new Flutter project.
 
+## Install Dart Firebase CLI
+```bash
+$ dart pub global activate flutterfire_cli
+$ cd learn-flutter/spotify
+$ flutterfire configure
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
