@@ -21,7 +21,7 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
 
       if (e.code == 'invalid-email') {
         message = 'User not found for that email.';
-      } else if (e.code == 'invalid-credential') {
+      } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         message = 'Invalid email/password combination.';
       }
       return Left(message);
@@ -42,6 +42,8 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
         message = 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
         message = 'The account already exists for that email.';
+      } else if (e.code == 'invalid-email') {
+        message = 'The email address is invalid.';
       }
       return Left(message);
     }
