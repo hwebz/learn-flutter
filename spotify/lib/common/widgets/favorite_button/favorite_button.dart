@@ -27,8 +27,9 @@ class FavoriteButton extends StatelessWidget {
 
           if (state is FavoriteButtonUpdated) {
             return IconButton(
-              onPressed: () {
-                favoriteButtonCubit.favoriteButtonUpdated(songEntity.songId);
+              onPressed: () async {
+                await favoriteButtonCubit
+                    .favoriteButtonUpdated(songEntity.songId);
 
                 if (function != null) {
                   function!();
