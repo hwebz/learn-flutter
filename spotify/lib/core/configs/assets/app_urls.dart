@@ -1,4 +1,4 @@
 class AppUrls {
   static const String defaultAvatar =
-      'https://cdn-icons-png.flaticon.com/512/6596/6596121.png';
+      'https://avatar-nct.nixcdn.com/avatar/2020/06/04/d/9/e/e/1591240258899.jpg';
 }

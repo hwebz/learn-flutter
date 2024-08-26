@@ -139,3 +139,19 @@
 <img src="./screenshots/blog_app-3.png" width="200" />
 <img src="./screenshots/blog_app-4.png" width="200" />
 <img src="./screenshots/blog_app-5.png" width="200" />
+
+### Spotify Clone
+[Build Spotify With Flutter - Bloc , Clean Architecture , Firebase , Figma](https://www.youtube.com/watch?v=4TFbXepOjLI)
+> /spotify
+
+#### Screenshots
+<img src="./screenshots/spotify-clone-1.png" width="200" />
+<img src="./screenshots/spotify-clone-2.png" width="200" />
+<img src="./screenshots/spotify-clone-3.png" width="200" />
+<img src="./screenshots/spotify-clone-4.png" width="200" />
+<img src="./screenshots/spotify-clone-5.png" width="200" />
+<img src="./screenshots/spotify-clone-6.png" width="200" />
+<img src="./screenshots/spotify-clone-7.png" width="200" />
+<img src="./screenshots/spotify-clone-8.png" width="200" />
+<img src="./screenshots/spotify-clone-9.png" width="200" />
+<img src="./screenshots/spotify-clone-10.png" width="200" />

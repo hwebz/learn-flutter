@@ -16,9 +16,10 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BasicAppBar(
-        title: Text('Profile'),
-        backgroundColor: Color(0xFF2C2B2B),
+      appBar: BasicAppBar(
+        title: const Text('Profile'),
+        backgroundColor:
+            context.isDarkMode ? const Color(0xFF2C2B2B) : Colors.white,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +60,7 @@ class ProfilePage extends StatelessWidget {
                       width: 90,
                       height: 90,
                       decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(45),
                           image: DecorationImage(
                               image: NetworkImage(state.user.imageURL!),
                               fit: BoxFit.cover)),
@@ -86,110 +88,119 @@ class ProfilePage extends StatelessWidget {
   Widget _favoriteSongs() {
     return BlocProvider(
       create: (context) => FavoriteSongsCubit()..getFavoriteSongs(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('FAVORITE SONGS'),
-            const SizedBox(height: 10),
-            BlocBuilder<FavoriteSongsCubit, FavoriteSongsState>(
-                builder: (context, state) {
-              if (state is FavoriteSongsLoading) {
-                return Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator());
-              }
+      child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('FAVORITE SONGS'),
+              const SizedBox(height: 10),
+              BlocBuilder<FavoriteSongsCubit, FavoriteSongsState>(
+                  builder: (context, state) {
+                if (state is FavoriteSongsLoading) {
+                  return Container(
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator());
+                }
 
-              if (state is FavoriteSongsLoaded) {
-                return ListView.separated(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var selectedSong = state.songs[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      SongPlayerPage(
-                                        songEntity: selectedSong,
-                                      )));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                selectedSong.image),
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(selectedSong.title,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16)),
-                                          Text(selectedSong.artist,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12)),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Row(
+                if (state is FavoriteSongsLoaded) {
+                  return Expanded(
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var selectedSong = state.songs[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SongPlayerPage(
+                                            songEntity: selectedSong,
+                                          )));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(formatDuration(selectedSong.duration)),
-                                  const SizedBox(width: 20),
-                                  FavoriteButton(
-                                    songEntity: selectedSong,
-                                    key: UniqueKey(),
-                                    function: () {
-                                      context
-                                          .read<FavoriteSongsCubit>()
-                                          .removeSong(index);
-                                    },
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                    selectedSong.image),
+                                                fit: BoxFit.cover,
+                                              )),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(selectedSong.title,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16)),
+                                              Text(selectedSong.artist,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 12)),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
+                                  const SizedBox(width: 10),
+                                  Row(
+                                    children: [
+                                      Text(formatDuration(
+                                          selectedSong.duration)),
+                                      const SizedBox(width: 20),
+                                      FavoriteButton(
+                                        songEntity: selectedSong,
+                                        key: UniqueKey(),
+                                        function: () {
+                                          context
+                                              .read<FavoriteSongsCubit>()
+                                              .removeSong(index);
+                                        },
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(),
-                    itemCount: state.songs.length);
-              }
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(),
+                        itemCount: state.songs.length),
+                  );
+                }
 
-              if (state is FavoriteSongsFailure) {
-                return const Text('Failed to load favorite songs');
-              }
+                if (state is FavoriteSongsFailure) {
+                  return const Text('Failed to load favorite songs');
+                }
 
-              return Container();
-            })
-          ],
+                return Container();
+              })
+            ],
+          ),
         ),
       ),
     );
