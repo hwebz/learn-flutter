@@ -12,4 +12,13 @@ class PlaylistsCubit extends Cubit<PlaylistsState> {
     returnedPlaylists.fold((l) => {emit(PlaylistsLoadFailure())},
         (data) => {emit(PlaylistsLoaded(playlists: data))});
   }
+
+  void toggleSongFavorite() {
+    if (state is PlaylistsLoaded) {
+      emit(PlaylistsLoaded(
+          playlists: (state as PlaylistsLoaded).playlists.map((e) {
+        return e.copyWith(isFavorite: !e.isFavorite);
+      }).toList()));
+    }
+  }
 }

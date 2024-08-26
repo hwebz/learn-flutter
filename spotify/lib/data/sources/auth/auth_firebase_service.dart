@@ -37,9 +37,8 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
               email: createUserRequest.email,
               password: createUserRequest.password);
 
-      FirebaseFirestore.instance.collection('Users').add({
+      FirebaseFirestore.instance.collection('Users').doc(data.user!.uid).set({
         'email': data.user?.email,
-        'uid': data.user?.uid,
         'name': createUserRequest.name,
       });
 

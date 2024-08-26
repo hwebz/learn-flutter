@@ -8,15 +8,18 @@ class SongModel {
   Timestamp? releaseDate;
   String? image;
   String? url;
+  bool? isFavorite;
+  String? songId;
 
-  SongModel({
-    this.title,
-    this.artist,
-    this.duration,
-    this.releaseDate,
-    this.image,
-    this.url,
-  });
+  SongModel(
+      {this.title,
+      this.artist,
+      this.duration,
+      this.releaseDate,
+      this.image,
+      this.url,
+      this.isFavorite,
+      this.songId});
 
   SongModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -25,6 +28,8 @@ class SongModel {
     releaseDate = json['releaseDate'];
     image = json['image'];
     url = json['url'];
+    isFavorite = json['isFavorite'];
+    songId = json['songId'];
   }
 }
 
@@ -36,6 +41,8 @@ extension SongModelX on SongModel {
         duration: duration!,
         releaseDate: releaseDate!,
         image: image!,
-        url: url!);
+        url: url!,
+        isFavorite: isFavorite!,
+        songId: songId!);
   }
 }

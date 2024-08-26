@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/common/helpers/format_duration.dart';
 import 'package:spotify/common/widgets/appbar/app_bar.dart';
+import 'package:spotify/common/widgets/favorite_button/favorite_button.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 import 'package:spotify/domain/entities/song/song.dart';
 import 'package:spotify/presentation/song_player/bloc/song_player_cubit.dart';
@@ -67,10 +69,7 @@ class SongPlayerPage extends StatelessWidget {
                     const TextStyle(fontWeight: FontWeight.w400, fontSize: 14)),
           ],
         ),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_outline_outlined,
-                size: 35, color: AppColors.darkGrey))
+        FavoriteButton(songEntity: songEntity)
       ],
     );
   }
@@ -130,12 +129,5 @@ class SongPlayerPage extends StatelessWidget {
 
       return Container();
     });
-  }
-
-  String formatDuration(Duration duration) {
-    final minutes = duration.inMinutes.remainder(60);
-    final seconds = duration.inSeconds.remainder(60);
-
-    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 }

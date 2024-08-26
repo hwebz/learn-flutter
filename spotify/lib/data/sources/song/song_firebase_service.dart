@@ -1,11 +1,18 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spotify/data/models/song/song.dart';
 import 'package:spotify/domain/entities/song/song.dart';
+import 'package:spotify/domain/usecases/song/is_favorite_song.dart';
+import 'package:spotify/service_locator.dart';
 
 abstract class SongFirebaseService {
   Future<Either> getNewSongs();
   Future<Either> getPlaylists();
+  Future<Either> addOrRemoveFavoriteSong(String songId);
+  Future<bool> isFavoriteSong(String songId);
 }
 
 class SongFirebaseServiceImpl implements SongFirebaseService {
@@ -21,6 +28,10 @@ class SongFirebaseServiceImpl implements SongFirebaseService {
 
       for (var element in data.docs) {
         var songModel = SongModel.fromJson(element.data());
+        bool isFavorite = await sl<IsFavoriteSongUseCase>()
+            .call(params: element.reference.id);
+        songModel.songId = element.reference.id;
+        songModel.isFavorite = isFavorite;
         songs.add(songModel.toEntity());
       }
 
@@ -42,12 +53,76 @@ class SongFirebaseServiceImpl implements SongFirebaseService {
 
       for (var element in data.docs) {
         var songModel = SongModel.fromJson(element.data());
+        bool isFavorite = await sl<IsFavoriteSongUseCase>()
+            .call(params: element.reference.id);
+        songModel.songId = element.reference.id;
+        songModel.isFavorite = isFavorite;
         songs.add(songModel.toEntity());
       }
 
       return Right(songs);
     } catch (e) {
       return const Left('An error occurred, Please try again.');
+    }
+  }
+
+  @override
+  Future<Either> addOrRemoveFavoriteSong(String songId) async {
+    try {
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+      late bool isFavorite;
+      var user = firebaseAuth.currentUser;
+      String uid = user!.uid;
+
+      QuerySnapshot favoriteSongs = await firebaseFirestore
+          .collection('Users')
+          .doc(uid)
+          .collection('Favorites')
+          .where('songId', isEqualTo: songId)
+          .get();
+
+      if (favoriteSongs.docs.isNotEmpty) {
+        await favoriteSongs.docs.first.reference.delete();
+        isFavorite = false;
+      } else {
+        await firebaseFirestore
+            .collection('Users')
+            .doc(uid)
+            .collection('Favorites')
+            .add({
+          'songId': songId,
+          'addedDate': Timestamp.now(),
+        });
+        isFavorite = true;
+      }
+
+      return Right(isFavorite);
+    } catch (e) {
+      return const Left('An error occurred, Please try again.');
+    }
+  }
+
+  @override
+  Future<bool> isFavoriteSong(String songId) async {
+    try {
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+      var user = firebaseAuth.currentUser;
+      String uid = user!.uid;
+
+      QuerySnapshot favoriteSongs = await firebaseFirestore
+          .collection('Users')
+          .doc(uid)
+          .collection('Favorites')
+          .where('songId', isEqualTo: songId)
+          .get();
+
+      return favoriteSongs.docs.isNotEmpty;
+    } catch (e) {
+      return false;
     }
   }
 }
